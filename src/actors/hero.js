@@ -5,6 +5,6 @@ export default canvas => {
   const mouseObserver = Rx.Observable.fromEvent(canvas, 'mousemove');
 
   return mouseObserver
-    .map(e => ({ x: e.clientX, y: HERO_Y })
+    .map(e => ({ x: e.clientX, y: HERO_Y }))
     .startWith({ x: canvas.width / 2, y: HERO_Y });
 };

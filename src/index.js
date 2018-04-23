@@ -1,14 +1,11 @@
 import 'reset-css';
 import './index.scss';
-import stars from './actors/stars';
+import Game from './actors/game';
 
-const canvas = document.createElement('canvas');
+const canvas = document.getElementById('space-invaders');
 const ctx = canvas.getContext('2d');
-document.body.appendChild(canvas);
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-
-stars(canvas).subscribe(paintStars);
 
 function paintStars(stars) {
   ctx.fillStyle = '#000000';
@@ -19,3 +16,9 @@ function paintStars(stars) {
     ctx.fillRect(x, y, size, size);
   });
 }
+
+function renderScene({ stars, hero }) {
+  paintStars(stars);
+}
+
+Game(canvas).subscribe(renderScene);
