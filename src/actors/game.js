@@ -2,13 +2,20 @@ import Rx from 'rxjs/Rx';
 import StarsActor from './stars';
 import HeroActor from './hero';
 import EnemiesActor from './enemies';
+import HeroShotsActor from './heroShots';
 
-export default canvas => (
-  Rx.Observable
+const SPEED = 40;
+
+export default canvas => {
+  const heroShip = HeroActor(canvas);
+
+  return Rx.Observable
     .combineLatest(
       StarsActor(canvas),
-      HeroActor(canvas),
+      heroShip,
       EnemiesActor(canvas),
-      (stars, hero, enemies) => ({ stars, hero, enemies }),
+      HeroShotsActor(canvas, heroShip),
+      (stars, hero, enemies, heroShots) => ({ stars, hero, enemies, heroShots }),
     )
-);
+    .sample(Rx.Observable.interval(SPEED))
+};

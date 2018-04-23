@@ -42,10 +42,20 @@ function drawEnemies(enemies) {
   });
 }
 
-function renderScene({ stars, hero, enemies }) {
+const SHOOTING_SPEED = 15;
+function paintHeroShots(heroShots) {
+  console.log(heroShots)
+  heroShots.forEach((shot) => {
+    shot.y -= SHOOTING_SPEED;
+    drawShip(shot.x, shot.y, 5, '#ffff00', 'up');
+  });
+}
+
+function renderScene({ stars, hero, enemies, heroShots }) {
   paintStars(stars);
   drawShip(hero.x, hero.y, 20, '#ff00ff', 'up');
   drawEnemies(enemies);
+  paintHeroShots(heroShots);
 }
 
 Game(canvas).subscribe(renderScene);
