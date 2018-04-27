@@ -15,13 +15,15 @@ export default (canvas, SpaceShip) => {
     .combineLatest(
       playerFiring,
       SpaceShip,
-      (shotEvents, spaceShip) => ({ x: spaceShip.x })
+      (shotEvents, { x, timestamp }) => ({ timestamp, x })
     )
+    .distinctUntilChanged(({ timestamp }) => timestamp)
     .scan((shotArray, shot) => {
       shotArray.push({
         x: shot.x,
         y: window.innerHeight - 50,
       });
+
       return shotArray;
     }, []);
 };
